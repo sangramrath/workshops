@@ -49,3 +49,17 @@ docker build -t hello-world:v2 .
 docker history hello-world:v1
 docker history hello-world:v2
 ```
+
+```
+cp hello-world.py hello-universe.py
+vi Dockerfile
+```
+Refer to instructor on changes
+
+```
+docker build -t hello-universe:v1 .
+```
+
+```
+docker history hello-universe:v1
+```
