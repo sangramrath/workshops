@@ -2,7 +2,7 @@
 ## Pre-requisites - 1
 ### Set hostname for easier identification
 ```
-sudo hostnamectl set-hostname controlplane
+sudo hostnamectl set-hostname worker01
 ```
 
 ### Logout and Login again
