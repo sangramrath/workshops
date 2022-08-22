@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-web
+  labels:
+    app: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      nodeName: controlplane
+      volumes:
+      - name: web-pv-volume
+        persistentVolumeClaim:
+          claimName: web-pv-claim
+      - name: token
+        secret:
+          secretName: linkedin
+      containers:
+      - name: nginx
+        image: nginx:1.20.0
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        env:
+        - name: cloudtype
+          value: "aws"
+        - name: pricing
+          value: "free"
+        volumeMounts:
+        - mountPath: "/usr/share/nginx/html"
+          name: web-pv-volume
+        - name: token
+          mountPath: "/token"
+          readOnly: true
+        ports:
+        - containerPort: 80
