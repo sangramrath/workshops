@@ -1,0 +1,28 @@
+kind: Deployment
+metadata:
+  name: nginx-web
+  labels:
+    app: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      nodeName: controlplane
+      volumes:
+      - name: web-pv-volume
+        persistentVolumeClaim:
+          claimName: web-pv-claim
+      containers:
+      - name: nginx
+        image: nginx:1.20.0
+        volumeMounts:
+        - mountPath: "/usr/share/nginx/html"
+          name: web-pv-volume
+        ports:
+        - containerPort: 80
