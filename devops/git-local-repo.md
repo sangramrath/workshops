@@ -40,5 +40,5 @@ git commit -m "Spelling corrections"
 ### Merge a local branch to main branch
 ```
 git checkout master
-git merge feature/01 master
+git merge feature/a master
 ```
