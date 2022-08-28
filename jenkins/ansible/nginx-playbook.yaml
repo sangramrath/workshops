@@ -17,5 +17,5 @@
         src: '{{item}}'
         dest: '/var/www/html/'
       loop:
-        - ~/vCard/index.html
-        - ~/vCard/style.css
+        - ./vCard/index.html
+        - ./vCard/style.css
