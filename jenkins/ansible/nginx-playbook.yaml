@@ -1,0 +1,21 @@
+# nginx-playbook.yml
+---
+- hosts: webservers 
+  become: True
+  tasks:
+    - name: Install nginx
+      apt:
+        name: "nginx"
+        state: "present"
+    - name: Start nginx
+      service:
+        name: nginx
+        state: started
+        enabled: True
+    - name: Deploy
+      copy:
+        src: '{{item}}'
+        dest: '/var/www/html/'
+      loop:
+        - ~/vCard/index.html
+        - ~/vCard/style.css
