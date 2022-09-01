@@ -1,0 +1,50 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "Web Server Template for Mumbai, Singapore, US-NC, US-NV",
+    "Mappings": {
+        "Region2AMI": {
+            "ap-south-1": {"AMI" : "ami-06489866022e12a14"},
+            "ap-southeast-1": {"AMI" : "ami-0b89f7b3f054b957e"},
+            "us-east-1": {"AMI" : "ami-05fa00d4c63e32376"},
+            "us-west-1": {"AMI" : "ami-018d291ca9ffc002f"}
+        }
+    },
+    "Parameters": {
+        "WebServerType" : {
+            "Description": "Select Instance Type",
+            "Type": "String",
+            "Default": "t2.micro",
+            "AllowedValues": ["t2.micro", "t3.micro"],
+            "ConstraintDescription": "Something"
+        },
+        "KeyPair": {
+            "Description": "Select Key Pair",
+            "Type": "AWS::EC2::KeyPair::KeyName"
+        }
+    },
+    "Resources": {
+        "WebServer": {
+            "Type": "AWS::EC2::Instance",
+            "Properties": {
+                "ImageId": {"Fn::FindInMap": ["Region2AMI", {"Ref": "Region"}, "AMI"]},
+                "InstanceType": {"Ref": "WebServerType"},
+                "KeyName": {"Ref": "KeyPair"},
+                "Tags": [ { "Key": "Env", "Value": "Training"},
+                { "Key": "Name", "Value": "WebServer-Sangram"}
+                ],
+                "SecurityGroups": [ {"Ref": "WebServerSG"} ]
+            }
+        },
+        "WebServerSG": {
+            "Type": "AWS::EC2::SecurityGroup",
+            "Properties": {
+                "GroupName": "Web SG by Sangram",
+                "GroupDescription": "SSH for Web SG - Sangram",
+                "Tags": [ { "Key": "Name", "Value": "SG-Sangram" } ],
+                "SecurityGroupIngress": [
+                { "IpProtocol": "tcp", "FromPort": "22", "ToPort": "22", "CidrIp": "0.0.0.0/0"}
+                ]
+            }
+        }
+    }
+}
