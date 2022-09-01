@@ -10,6 +10,13 @@
         }
     },
     "Parameters": {
+        "Region" : {
+            "Description": "Select Region",
+            "Type": "String",
+            "Default": "ap-south-1",
+            "AllowedValues": ["ap-south-1", "ap-southeast-1", "us-east-1", "us-west-1"],
+            "ConstraintDescription": "Something"            
+        },
         "WebServerType" : {
             "Description": "Select Instance Type",
             "Type": "String",
